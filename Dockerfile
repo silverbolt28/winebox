@@ -5,6 +5,9 @@ MAINTAINER silverbolt28
 ENV HOME /config
 ENV WINEPREFIX /config/wine
 ENV DISPLAY :0
+ENV XVFBARGS :0 -screen 0 1920x1080x24
+ENV X11VNCARGS -nevershared -forever -passwd password
+ENV NOVNCARGS --vnc localhost:5900 --listen 8080
 
 # Install packages
 RUN \
