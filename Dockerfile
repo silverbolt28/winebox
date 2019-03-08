@@ -1,4 +1,4 @@
-FROM i386/alpine:3.9
+FROM i386/alpine:edge
 MAINTAINER silverbolt28
 
 # Set environment variables
@@ -11,8 +11,6 @@ ENV NOVNCARGS --vnc localhost:5900 --listen 8080
 
 # Install packages
 RUN \
- echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories && \
- echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
  echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
  apk upgrade --no-cache --available && \
  apk add --no-cache tzdata shadow xvfb x11vnc supervisor novnc bash openbox xterm wine
