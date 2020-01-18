@@ -13,7 +13,7 @@ ENV NOVNCARGS --vnc localhost:5900 --listen 8080
 RUN \
  echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
  apk upgrade --no-cache --available && \
- apk add --no-cache tzdata shadow xvfb x11vnc supervisor novnc bash openbox xterm wine
+ apk add --no-cache tzdata shadow xvfb x11vnc supervisor novnc bash openbox xterm wine font-noto
 
 # Change nobody's uid, gid, home, and shell
 RUN \
