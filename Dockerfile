@@ -1,4 +1,4 @@
-FROM i386/alpine:3.10
+FROM i386/alpine:3.11
 MAINTAINER silverbolt28
 
 # Set environment variables
