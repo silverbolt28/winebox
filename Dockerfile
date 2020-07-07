@@ -1,5 +1,4 @@
 FROM i386/alpine:3.12
-MAINTAINER silverbolt28
 
 # Set environment variables
 ENV HOME /config
