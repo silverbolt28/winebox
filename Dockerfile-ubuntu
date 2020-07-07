@@ -1,0 +1,40 @@
+FROM ubuntu:20.04
+
+# Set environment variables
+ENV DEBIAN_FRONTEND noninteractive
+ENV LC_ALL C.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+ENV HOME /config
+ENV WINEPREFIX /config/wine
+ENV DISPLAY :0
+ENV XVFBARGS :0 -screen 0 1920x1080x24
+ENV X11VNCARGS -nevershared -forever -passwd password
+ENV NOVNCARGS --vnc localhost:5900 --listen 8080
+
+# Change nobody's uid, gid, home, and shell
+RUN \
+ usermod -u 99 nobody && \
+ usermod -g 100 nobody && \
+ usermod -d /config nobody && \
+ usermod -s /bin/bash nobody && \
+ mkdir -p /config && \
+ chown -R nobody:users /config
+
+# Install packages
+RUN \
+ dpkg --add-architecture i386 && \
+ apt-get update && \
+ apt-get upgrade -y -o Dpkg::Options::="--force-confold" && \
+ apt-get -y install --no-install-recommends net-tools xterm xvfb x11vnc novnc openbox supervisor wine wine64 wine32 && \
+ rm -rf /var/lib/apt/lists/*
+
+# Add supervisord.conf and modify includes
+ADD supervisord-ubuntu.conf /etc/supervisor/conf.d/supervisord.conf
+RUN echo "files = /etc/supervisor/conf.d/*.conf /config/supervisor.d/*.conf" >> /etc/supervisor/supervisord.conf
+
+# Volumes and ports
+VOLUME /config
+EXPOSE 8080
+
+CMD ["/usr/bin/supervisord"]
